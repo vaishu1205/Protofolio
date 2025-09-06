@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,6 +8,11 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
+    <!-- EmailJS CDN -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
     <style>
       /* Reset and Base Styles */
       * {
@@ -24,8 +28,13 @@
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         line-height: 1.6;
-        color: #333;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #e0e0e0;
+        background: linear-gradient(
+          135deg,
+          #0f0f0f 0%,
+          #1a1a1a 50%,
+          #0f0f0f 100%
+        );
         min-height: 100vh;
       }
 
@@ -40,12 +49,12 @@
         position: fixed;
         top: 0;
         width: 100%;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(20px);
         z-index: 1000;
         padding: 1rem 0;
         transition: all 0.3s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 1px solid rgba(0, 255, 255, 0.2);
       }
 
       .nav-container {
@@ -60,7 +69,7 @@
       .nav-logo .logo-text {
         font-size: 2rem;
         font-weight: bold;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -73,14 +82,14 @@
 
       .nav-link {
         text-decoration: none;
-        color: #333;
+        color: #e0e0e0;
         font-weight: 500;
         transition: all 0.3s ease;
         position: relative;
       }
 
       .nav-link:hover {
-        color: #667eea;
+        color: #00ffff;
       }
 
       .nav-link::after {
@@ -90,7 +99,7 @@
         height: 2px;
         bottom: -5px;
         left: 0;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
         transition: width 0.3s ease;
       }
 
@@ -107,7 +116,7 @@
       .bar {
         width: 25px;
         height: 3px;
-        background: #333;
+        background: #00ffff;
         margin: 3px 0;
         transition: 0.3s;
       }
@@ -118,7 +127,12 @@
         display: flex;
         align-items: center;
         padding: 100px 0 50px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(
+          135deg,
+          #0a0a0a 0%,
+          #1a1a2e 50%,
+          #16213e 100%
+        );
         color: white;
         position: relative;
         overflow: hidden;
@@ -131,8 +145,22 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-        opacity: 0.3;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 255, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(255, 107, 53, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 80%,
+            rgba(138, 43, 226, 0.1) 0%,
+            transparent 50%
+          );
+        opacity: 0.8;
       }
 
       .hero-container {
@@ -158,7 +186,7 @@
       }
 
       .highlight {
-        background: linear-gradient(135deg, #ffd89b, #19547b);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -167,14 +195,18 @@
       .hero-subtitle {
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
-        opacity: 0.9;
+        background: linear-gradient(135deg, #ffffff, #00ffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .hero-description {
         font-size: 1.1rem;
         margin-bottom: 2rem;
-        opacity: 0.8;
+        opacity: 0.9;
         line-height: 1.8;
+        color: #b0b0b0;
       }
 
       .hero-buttons {
@@ -196,36 +228,37 @@
       }
 
       .btn-primary {
-        background: linear-gradient(135deg, #ffd89b, #19547b);
-        color: white;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        color: #000;
+        box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
       }
 
       .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 6px 20px rgba(0, 255, 255, 0.4);
+        background: linear-gradient(135deg, #ff6b35, #00ffff);
       }
 
       .btn-secondary {
         background: transparent;
-        color: white;
-        border: 2px solid white;
+        color: #00ffff;
+        border: 2px solid #00ffff;
       }
 
       .btn-secondary:hover {
-        background: white;
-        color: #667eea;
+        background: #00ffff;
+        color: #000;
       }
 
       /* Profile Card */
       .profile-card {
         position: relative;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
+        background: rgba(0, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
         border-radius: 20px;
         padding: 2rem;
         text-align: center;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(0, 255, 255, 0.3);
       }
 
       .profile-placeholder {
@@ -244,7 +277,12 @@
 
       .icon-float {
         position: absolute;
-        background: rgba(255, 255, 255, 0.2);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.2),
+          rgba(255, 107, 53, 0.2)
+        );
+        backdrop-filter: blur(10px);
         border-radius: 50%;
         width: 60px;
         height: 60px;
@@ -252,6 +290,8 @@
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
+        color: #00ffff;
+        border: 1px solid rgba(0, 255, 255, 0.3);
         animation: float 3s ease-in-out infinite;
       }
 
@@ -300,7 +340,7 @@
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 1rem;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -308,13 +348,13 @@
 
       .section-subtitle {
         font-size: 1.2rem;
-        color: #666;
+        color: #b0b0b0;
         opacity: 0.8;
       }
 
       /* About Section */
       .about {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         position: relative;
       }
 
@@ -329,7 +369,7 @@
         font-size: 1.1rem;
         line-height: 1.8;
         margin-bottom: 1.5rem;
-        color: #555;
+        color: #d0d0d0;
       }
 
       .stats-container {
@@ -342,21 +382,28 @@
       .stat-item {
         text-align: center;
         padding: 1.5rem;
-        background: white;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
+        );
+        backdrop-filter: blur(10px);
         border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.2);
         transition: transform 0.3s ease;
       }
 
       .stat-item:hover {
         transform: translateY(-5px);
+        border-color: rgba(0, 255, 255, 0.5);
       }
 
       .stat-number {
         display: block;
         font-size: 2rem;
         font-weight: bold;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -364,7 +411,7 @@
 
       .stat-label {
         font-size: 0.9rem;
-        color: #666;
+        color: #b0b0b0;
         margin-top: 0.5rem;
       }
 
@@ -375,19 +422,26 @@
       }
 
       .detail-card {
-        background: white;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
+        );
+        backdrop-filter: blur(10px);
         padding: 1.5rem;
         border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.2);
         transition: transform 0.3s ease;
       }
 
       .detail-card:hover {
         transform: translateY(-3px);
+        border-color: rgba(0, 255, 255, 0.5);
       }
 
       .detail-card h3 {
-        color: #667eea;
+        color: #00ffff;
         margin-bottom: 0.5rem;
         display: flex;
         align-items: center;
@@ -396,7 +450,7 @@
 
       /* Skills Section */
       .skills {
-        background: white;
+        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
       }
 
       .skills-container {
@@ -406,19 +460,26 @@
       }
 
       .skill-category {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
+        );
+        backdrop-filter: blur(20px);
         padding: 2rem;
         border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.2);
         transition: transform 0.3s ease;
       }
 
       .skill-category:hover {
         transform: translateY(-5px);
+        border-color: rgba(0, 255, 255, 0.5);
       }
 
       .skill-category h3 {
-        color: #667eea;
+        color: #00ffff;
         margin-bottom: 1.5rem;
         display: flex;
         align-items: center;
@@ -433,31 +494,49 @@
       }
 
       .skill-item {
-        background: white;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.2),
+          rgba(255, 107, 53, 0.2)
+        );
+        backdrop-filter: blur(10px);
         padding: 0.5rem 1rem;
         border-radius: 25px;
         font-size: 0.9rem;
-        color: #667eea;
+        color: #ffffff;
         font-weight: 500;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(0, 255, 255, 0.3);
         transition: all 0.3s ease;
       }
 
       .skill-item:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 107, 53, 0.2),
+          rgba(0, 255, 255, 0.2)
+        );
       }
 
       /* Projects Section */
       .projects {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
         color: white;
       }
 
       .projects .section-title {
         color: white;
-        background: none;
-        -webkit-text-fill-color: white;
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .projects .section-subtitle {
@@ -471,16 +550,18 @@
       }
 
       .project-card {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
+        background: rgba(0, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
         border-radius: 20px;
         overflow: hidden;
         transition: transform 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(0, 255, 255, 0.2);
       }
 
       .project-card:hover {
         transform: translateY(-10px);
+        border-color: rgba(0, 255, 255, 0.5);
+        box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
       }
 
       .project-image {
@@ -488,8 +569,8 @@
         height: 200px;
         background: linear-gradient(
           135deg,
-          rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.05)
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
         );
         display: flex;
         align-items: center;
@@ -500,6 +581,7 @@
       .project-placeholder {
         font-size: 4rem;
         opacity: 0.7;
+        color: #00ffff;
       }
 
       .project-overlay {
@@ -529,20 +611,25 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.2),
+          rgba(255, 107, 53, 0.2)
+        );
+        backdrop-filter: blur(10px);
+        color: #00ffff;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
         transition: all 0.3s ease;
-        border: none;
+        border: 1px solid rgba(0, 255, 255, 0.3);
         cursor: pointer;
       }
 
       .btn-icon:hover {
-        background: white;
-        color: #667eea;
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        color: #000;
         transform: scale(1.1);
       }
 
@@ -553,12 +640,14 @@
       .project-content h3 {
         font-size: 1.3rem;
         margin-bottom: 1rem;
+        color: #00ffff;
       }
 
       .project-content p {
         opacity: 0.9;
         line-height: 1.6;
         margin-bottom: 1rem;
+        color: #d0d0d0;
       }
 
       .project-tech {
@@ -568,16 +657,22 @@
       }
 
       .tech-tag {
-        background: rgba(255, 255, 255, 0.2);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.2),
+          rgba(255, 107, 53, 0.2)
+        );
+        backdrop-filter: blur(10px);
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
         font-size: 0.8rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        color: #ffffff;
       }
 
       /* Experience Section */
       .experience {
-        background: white;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       }
 
       .timeline {
@@ -593,7 +688,7 @@
         top: 0;
         bottom: 0;
         width: 2px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
       }
 
       .timeline-item {
@@ -608,20 +703,26 @@
         top: 0;
         width: 30px;
         height: 30px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: #000;
         font-size: 0.8rem;
       }
 
       .timeline-content {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
+        );
+        backdrop-filter: blur(20px);
         padding: 2rem;
         border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.2);
       }
 
       .timeline-header {
@@ -629,22 +730,23 @@
       }
 
       .timeline-header h3 {
-        color: #667eea;
+        color: #00ffff;
         margin-bottom: 0.5rem;
       }
 
       .timeline-company {
         font-weight: 600;
-        color: #333;
+        color: #ffffff;
         margin-right: 1rem;
       }
 
       .timeline-date {
-        background: #667eea;
-        color: white;
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        color: #000;
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
         font-size: 0.9rem;
+        font-weight: 600;
       }
 
       .timeline-description ul {
@@ -656,19 +758,19 @@
         position: relative;
         padding-left: 1.5rem;
         margin-bottom: 0.5rem;
-        color: #555;
+        color: #d0d0d0;
       }
 
       .timeline-description li::before {
         content: "▶";
         position: absolute;
         left: 0;
-        color: #667eea;
+        color: #00ffff;
       }
 
       /* Education Section */
       .education {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
       }
 
       .education-container {
@@ -678,10 +780,16 @@
       }
 
       .education-card {
-        background: white;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
+        );
+        backdrop-filter: blur(20px);
         padding: 2rem;
         border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.2);
         display: flex;
         align-items: center;
         gap: 1.5rem;
@@ -690,11 +798,12 @@
 
       .education-card:hover {
         transform: translateY(-5px);
+        border-color: rgba(0, 255, 255, 0.5);
       }
 
       .education-icon {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        color: #000;
         width: 60px;
         height: 60px;
         border-radius: 50%;
@@ -705,12 +814,12 @@
       }
 
       .education-content h3 {
-        color: #667eea;
+        color: #00ffff;
         margin-bottom: 0.5rem;
       }
 
       .education-content h4 {
-        color: #333;
+        color: #ffffff;
         margin-bottom: 1rem;
       }
 
@@ -721,16 +830,17 @@
       }
 
       .education-year {
-        background: #f0f0f0;
+        background: rgba(0, 255, 255, 0.2);
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
         font-size: 0.9rem;
-        color: #666;
+        color: #ffffff;
+        border: 1px solid rgba(0, 255, 255, 0.3);
       }
 
       .education-grade {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        color: #000;
         padding: 0.3rem 0.8rem;
         border-radius: 15px;
         font-size: 0.9rem;
@@ -739,7 +849,7 @@
 
       /* Achievements Section */
       .achievements {
-        background: white;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       }
 
       .achievements-content {
@@ -748,15 +858,15 @@
       }
 
       .achievement-highlight {
-        background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
-        color: white;
+        background: linear-gradient(135deg, #ff6b35 0%, #00ffff 100%);
+        color: #000;
         padding: 2rem;
         border-radius: 20px;
         margin-bottom: 3rem;
         display: flex;
         align-items: center;
         gap: 1.5rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 10px 30px rgba(0, 255, 255, 0.2);
       }
 
       .highlight-icon {
@@ -769,6 +879,49 @@
         font-size: 1.5rem;
       }
 
+      .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .achievement-card {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
+        );
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.2);
+        transition: transform 0.3s ease;
+      }
+
+      .achievement-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(0, 255, 255, 0.5);
+      }
+
+      .achievement-card .icon {
+        font-size: 2rem;
+        color: #00ffff;
+        margin-bottom: 1rem;
+      }
+
+      .achievement-card h4 {
+        color: #00ffff;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .achievement-card p {
+        color: #d0d0d0;
+        line-height: 1.6;
+      }
+
       .certifications-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -776,30 +929,44 @@
       }
 
       .cert-item {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.1),
+          rgba(255, 107, 53, 0.1)
+        );
+        backdrop-filter: blur(10px);
         padding: 1rem;
         border-radius: 15px;
         text-align: center;
         font-weight: 500;
-        color: #667eea;
+        color: #ffffff;
         transition: transform 0.3s ease;
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(0, 255, 255, 0.2);
       }
 
       .cert-item:hover {
         transform: translateY(-3px);
+        border-color: rgba(0, 255, 255, 0.5);
       }
 
       /* Contact Section */
       .contact {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
         color: white;
       }
 
       .contact .section-title {
         color: white;
-        background: none;
-        -webkit-text-fill-color: white;
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .contact .section-subtitle {
@@ -821,7 +988,12 @@
       }
 
       .contact-icon {
-        background: rgba(255, 255, 255, 0.2);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.2),
+          rgba(255, 107, 53, 0.2)
+        );
+        backdrop-filter: blur(10px);
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -829,15 +1001,19 @@
         align-items: center;
         justify-content: center;
         font-size: 1.2rem;
+        color: #00ffff;
+        border: 1px solid rgba(0, 255, 255, 0.3);
       }
 
       .contact-details h3 {
         margin-bottom: 0.5rem;
         font-size: 1.1rem;
+        color: #00ffff;
       }
 
       .contact-details p {
         opacity: 0.9;
+        color: #d0d0d0;
       }
 
       .social-links {
@@ -847,30 +1023,36 @@
       }
 
       .social-link {
-        background: rgba(255, 255, 255, 0.2);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 255, 0.2),
+          rgba(255, 107, 53, 0.2)
+        );
+        backdrop-filter: blur(10px);
         width: 50px;
         height: 50px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: #00ffff;
         text-decoration: none;
         transition: all 0.3s ease;
+        border: 1px solid rgba(0, 255, 255, 0.3);
       }
 
       .social-link:hover {
-        background: white;
-        color: #667eea;
+        background: linear-gradient(135deg, #00ffff, #ff6b35);
+        color: #000;
         transform: translateY(-3px);
       }
 
       .contact-form {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
+        background: rgba(0, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
         padding: 2rem;
         border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(0, 255, 255, 0.2);
       }
 
       .form-group {
@@ -881,11 +1063,12 @@
       .form-group textarea {
         width: 100%;
         padding: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(0, 255, 255, 0.3);
         border-radius: 10px;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.3);
         color: white;
         font-size: 1rem;
+        backdrop-filter: blur(10px);
       }
 
       .form-group input::placeholder,
@@ -896,13 +1079,13 @@
       .form-group input:focus,
       .form-group textarea:focus {
         outline: none;
-        border-color: rgba(255, 255, 255, 0.6);
-        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(0, 255, 255, 0.6);
+        background: rgba(0, 0, 0, 0.5);
       }
 
       /* Footer */
       .footer {
-        background: #1a1a1a;
+        background: #0a0a0a;
         color: white;
         text-align: center;
         padding: 2rem 0;
@@ -911,10 +1094,11 @@
       .footer-content p {
         margin: 0.5rem 0;
         opacity: 0.8;
+        color: #b0b0b0;
       }
 
       .footer i {
-        color: #ff6b6b;
+        color: #ff6b35;
       }
 
       /* Modal Styles */
@@ -926,12 +1110,12 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(5px);
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(10px);
       }
 
       .modal-content {
-        background: white;
+        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
         margin: 5% auto;
         padding: 2rem;
         border-radius: 20px;
@@ -941,6 +1125,8 @@
         overflow-y: auto;
         position: relative;
         animation: modalSlideIn 0.3s ease;
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        color: #e0e0e0;
       }
 
       @keyframes modalSlideIn {
@@ -960,12 +1146,12 @@
         top: 1rem;
         font-size: 2rem;
         cursor: pointer;
-        color: #999;
+        color: #00ffff;
         transition: color 0.3s ease;
       }
 
       .close:hover {
-        color: #333;
+        color: #ff6b35;
       }
 
       /* Responsive Design */
@@ -975,12 +1161,14 @@
           left: -100%;
           top: 70px;
           flex-direction: column;
-          background: white;
+          background: rgba(10, 10, 10, 0.95);
+          backdrop-filter: blur(20px);
           width: 100%;
           text-align: center;
           transition: 0.3s;
-          box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
           padding: 2rem 0;
+          border: 1px solid rgba(0, 255, 255, 0.2);
         }
 
         .nav-menu.active {
@@ -1034,6 +1222,10 @@
         .achievement-highlight {
           flex-direction: column;
           text-align: center;
+        }
+
+        .achievements-grid {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -1090,7 +1282,7 @@
             <h1 class="hero-title">
               Hi, I'm <span class="highlight">Sai Vaishnavi</span>
             </h1>
-            <h2 class="hero-subtitle">Full Stack Developer & ML Enthusiast</h2>
+            <h2 class="hero-subtitle">Application Developer & ML Enthusiast</h2>
             <p class="hero-description">
               I craft innovative web applications, mobile apps, and AI-powered
               solutions. Currently pursuing B.Tech in Information Technology
@@ -1112,7 +1304,7 @@
                     height: 200px;
                     border-radius: 50%;
                     object-fit: cover;
-                    border: 4px solid rgba(255, 255, 255, 0.3);
+                    border: 4px solid rgba(0, 255, 255, 0.3);
                   "
                 />
               </div>
@@ -1163,7 +1355,7 @@
             </p>
             <div class="stats-container">
               <div class="stat-item">
-                <span class="stat-number">4+</span>
+                <span class="stat-number">5+</span>
                 <span class="stat-label">Major Projects</span>
               </div>
               <div class="stat-item">
@@ -1263,7 +1455,7 @@
               <span class="skill-item">Postman</span>
               <span class="skill-item">VS Code</span>
               <span class="skill-item">DSA</span>
-              <span class="skill-item">Agile</span>
+              <span class="skill-item">AWS</span>
             </div>
           </div>
         </div>
@@ -1323,7 +1515,11 @@
           <div class="project-card">
             <div class="project-image">
               <div class="project-placeholder">
-                <i class="fas fa-code"></i>
+                <img
+                  src="images/CodePulse_Image.jpg"
+                  alt="CodePlus Screenshot"
+                  style="width: 70%"
+                />
               </div>
               <div class="project-overlay">
                 <div class="project-actions">
@@ -1372,11 +1568,20 @@
                     <i class="fas fa-eye"></i>
                   </button>
                   <a
-                    href="https://github.com/your-username/recipe-generator"
+                    href="https://github.com/vaishu1205/RecipieGenFrontend"
                     target="_blank"
                     class="btn-icon"
+                    title="Frontend Repository"
                   >
-                    <i class="fas fa-external-link-alt"></i>
+                    <i class="fab fa-github"></i>
+                  </a>
+                  <a
+                    href="https://github.com/vaishu1205/RecipieGenBackend"
+                    target="_blank"
+                    class="btn-icon"
+                    title="Backend Repository"
+                  >
+                    <i class="fas fa-server"></i>
                   </a>
                 </div>
               </div>
@@ -1391,6 +1596,48 @@
                 <span class="tech-tag">Next.js</span>
                 <span class="tech-tag">AI</span>
                 <span class="tech-tag">SQL</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <div class="project-placeholder">
+                <img
+                  src="images/Screenshot 2025-09-05 231658.png"
+                  alt="Lost and Found UI/UX"
+                  style="width: 100%; object-fit: contain"
+                />
+              </div>
+              <div class="project-overlay">
+                <div class="project-actions">
+                  <button
+                    class="btn-icon"
+                    onclick="openProjectModal('lostfound')"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <a
+                    href="https://www.figma.com/your-figma-link"
+                    target="_blank"
+                    class="btn-icon"
+                  >
+                    <i class="fab fa-figma"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="project-content">
+              <h3>Lost & Found Campus</h3>
+              <p>
+                UI/UX design for a campus lost and found system with admin
+                dashboard, notifications, chat features, and location tracking
+                for lost items.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Figma</span>
+                <span class="tech-tag">UI/UX</span>
+                <span class="tech-tag">Design</span>
               </div>
             </div>
           </div>
@@ -1536,6 +1783,43 @@
               </p>
             </div>
           </div>
+
+          <div class="achievements-grid">
+            <div class="achievement-card">
+              <div class="icon">
+                <i class="fas fa-medal"></i>
+              </div>
+              <h4>1st Prize - Project Space Event</h4>
+              <p>
+                Won first place among 125 technology teams for our innovative
+                CodePulse project, demonstrating excellence in coding assistance
+                and AI integration.
+              </p>
+            </div>
+
+            <div class="achievement-card">
+              <div class="icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <h4>Top Performer - Flutter Internship</h4>
+              <p>
+                Selected among top performers during Flutter development
+                internship at Technical Hub, recognized for outstanding mobile
+                app development skills.
+              </p>
+            </div>
+          </div>
+
+          <h3
+            style="
+              color: #00ffff;
+              margin-top: 3rem;
+              margin-bottom: 2rem;
+              text-align: center;
+            "
+          >
+            Professional Certifications
+          </h3>
           <div class="certifications-grid">
             <div class="cert-item">Red Hat Administration</div>
             <div class="cert-item">UI/UX Design</div>
@@ -1544,8 +1828,8 @@
             <div class="cert-item">Cisco C Programming</div>
             <div class="cert-item">Python Development</div>
             <div class="cert-item">HTML Specialist</div>
-            <div class="cert-item">Git & GitHub Workshop</div>
-            <div class="cert-item">Data Science Bootcamp</div>
+            <div class="cert-item">AWS Cloud Certificate</div>
+            <div class="cert-item">Machine Learning</div>
           </div>
         </div>
       </div>
@@ -1657,8 +1941,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
-          <p>&copy; 2024 Sai Vaishnavi. All rights reserved.</p>
-          <p>Crafted with <i class="fas fa-heart"></i> and lots of coffee</p>
+          <p>&copy; 2025 Sai Vaishnavi. All rights reserved.</p>
         </div>
       </div>
     </footer>
@@ -1674,767 +1957,999 @@
     </div>
 
     <script>
-      // JavaScript will be added in the next step
-    </script>
-  </body>
-</html>
-<script>
-  // Mobile Navigation Toggle
-  const navToggle = document.getElementById("nav-toggle");
-  const navMenu = document.getElementById("nav-menu");
+      // Mobile Navigation Toggle
+      const navToggle = document.getElementById("nav-toggle");
+      const navMenu = document.getElementById("nav-menu");
 
-  navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("active");
-  });
+      navToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+      });
 
-  // Close mobile menu when clicking on a link
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    link.addEventListener("click", () => {
-      navMenu.classList.remove("active");
-    });
-  });
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("active");
+        });
+      });
 
-  // Smooth scrolling for navigation links
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Navbar background on scroll
+      window.addEventListener("scroll", () => {
+        const navbar = document.querySelector(".navbar");
+        if (window.scrollY > 100) {
+          navbar.style.background = "rgba(10, 10, 10, 0.98)";
+          navbar.style.boxShadow = "0 2px 20px rgba(0, 255, 255, 0.1)";
+        } else {
+          navbar.style.background = "rgba(10, 10, 10, 0.95)";
+          navbar.style.boxShadow = "none";
+        }
+      });
+
+      // Intersection Observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      // Animate elements on scroll
+      function initScrollAnimations() {
+        const animateElements = document.querySelectorAll(
+          ".skill-category, .project-card, .timeline-item, .education-card, .stat-item, .detail-card, .cert-item, .achievement-card"
+        );
+
+        animateElements.forEach((el) => {
+          el.style.opacity = "0";
+          el.style.transform = "translateY(30px)";
+          el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+          observer.observe(el);
         });
       }
-    });
-  });
 
-  // Navbar background on scroll
-  window.addEventListener("scroll", () => {
-    const navbar = document.querySelector(".navbar");
-    if (window.scrollY > 100) {
-      navbar.style.background = "rgba(255, 255, 255, 0.98)";
-      navbar.style.boxShadow = "0 2px 20px rgba(0, 0, 0, 0.1)";
-    } else {
-      navbar.style.background = "rgba(255, 255, 255, 0.95)";
-      navbar.style.boxShadow = "none";
-    }
-  });
+      // Counter animation for stats
+      function animateCounters() {
+        const counters = document.querySelectorAll(".stat-number");
 
-  // Intersection Observer for animations
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-  };
+        counters.forEach((counter) => {
+          const target = counter.textContent;
+          const isNumber = !isNaN(parseInt(target));
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-      }
-    });
-  }, observerOptions);
+          if (isNumber) {
+            const targetNumber = parseInt(target);
+            let current = 0;
+            const increment = targetNumber / 100;
 
-  // Animate elements on scroll
-  function initScrollAnimations() {
-    const animateElements = document.querySelectorAll(
-      ".skill-category, .project-card, .timeline-item, .education-card, .stat-item, .detail-card, .cert-item"
-    );
+            const updateCounter = () => {
+              if (current < targetNumber) {
+                current += increment;
+                counter.textContent = Math.ceil(current);
+                requestAnimationFrame(updateCounter);
+              } else {
+                counter.textContent = target;
+              }
+            };
 
-    animateElements.forEach((el) => {
-      el.style.opacity = "0";
-      el.style.transform = "translateY(30px)";
-      el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-      observer.observe(el);
-    });
-  }
+            // Start animation when element is visible
+            const counterObserver = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  updateCounter();
+                  counterObserver.unobserve(entry.target);
+                }
+              });
+            });
 
-  // Counter animation for stats
-  function animateCounters() {
-    const counters = document.querySelectorAll(".stat-number");
-
-    counters.forEach((counter) => {
-      const target = counter.textContent;
-      const isNumber = !isNaN(parseInt(target));
-
-      if (isNumber) {
-        const targetNumber = parseInt(target);
-        let current = 0;
-        const increment = targetNumber / 100;
-
-        const updateCounter = () => {
-          if (current < targetNumber) {
-            current += increment;
-            counter.textContent = Math.ceil(current);
-            requestAnimationFrame(updateCounter);
-          } else {
-            counter.textContent = target;
+            counterObserver.observe(counter.parentElement);
           }
+        });
+      }
+
+      // Project modal functionality
+      const modal = document.getElementById("projectModal");
+      const modalBody = document.getElementById("modalBody");
+      const closeBtn = document.querySelector(".close");
+
+      function openProjectModal(projectId) {
+        const projectData = {
+          healthpredict: {
+            title: "HealthPredict - Disease Prediction Web App",
+            description:
+              "A comprehensive machine learning web application that predicts diseases based on user symptoms using advanced algorithms.",
+            features: [
+              "Disease prediction using Naive Bayes & Random Forest algorithms",
+              "Responsive frontend with side-by-side prediction comparisons",
+              "Data preprocessing and feature engineering for improved accuracy",
+              "User-friendly interface with symptom input forms",
+              "Real-time prediction results with confidence scores",
+            ],
+            technologies: [
+              "Python",
+              "Scikit-Learn",
+              "HTML5",
+              "CSS3",
+              "JavaScript",
+              "Flask",
+              "Pandas",
+              "NumPy",
+            ],
+            challenges:
+              "Implementing accurate disease prediction while handling diverse symptom combinations and ensuring model reliability.",
+            outcome:
+              "Successfully created a working disease prediction system with high accuracy rates and intuitive user experience.",
+            documents: [
+              {
+                name: "Project Presentation",
+                url: "presentations/Vaishnavi_HealthPredict.pdf",
+                type: "pdf",
+              },
+            ],
+          },
+          codeplus: {
+            title: "CodePlus - Student Coding Assistant App",
+            description:
+              "An intelligent mobile application designed to help students learn programming through interactive debugging, quizzes, and AI-powered explanations.",
+            features: [
+              "Real-time code debugging with AI assistance",
+              "Interactive programming quizzes and challenges",
+              "Code explanation and learning modules",
+              "Firebase authentication and user progress tracking",
+              "API integrations for enhanced functionality",
+              "Real-time error analysis with suggested fixes",
+            ],
+            technologies: ["Flutter", "Dart", "Firebase", "REST APIs", "APIs"],
+            challenges:
+              "Integrating multiple APIs while maintaining app performance and creating an intuitive learning experience for students.",
+            outcome:
+              "Developed a comprehensive coding assistant that helps students learn programming more effectively with personalized feedback. Won 1st prize among 125 teams in Project Space event.",
+            documents: [
+              {
+                name: "CodePulse Presentation",
+                url: "presentations/CodePulse_Vaishnavi.pdf",
+                type: "pdf",
+              },
+            ],
+          },
+          recipe: {
+            title: "Recipe Generator - AI Web App",
+            description:
+              "An AI-powered recipe recommendation system that generates personalized cooking suggestions based on available ingredients and dietary preferences.",
+            features: [
+              "AI-powered recipe generation using Gemini API",
+              "Ingredient-based recipe suggestions",
+              "Dietary preference filtering (vegetarian, vegan, gluten-free, etc.)",
+              "Cooking time and difficulty level preferences",
+              "Full-stack implementation with secure backend APIs",
+              "Personalized user experience with saved preferences",
+            ],
+            technologies: [
+              "Next.js",
+              "React",
+              "Gemini API",
+              "SQL",
+              "Node.js",
+              "JavaScript",
+              "CSS3",
+            ],
+            challenges:
+              "Creating accurate recipe recommendations while handling diverse dietary restrictions and ingredient combinations.",
+            outcome:
+              "Built a functional AI recipe generator that provides personalized cooking suggestions with high user satisfaction.",
+            githubLinks: [
+              {
+                name: "Frontend Repository",
+                url: "https://github.com/vaishu1205/RecipeGenerator-Frontend",
+                type: "frontend",
+              },
+              {
+                name: "Backend Repository",
+                url: "https://github.com/vaishu1205/RecipeGenerator-Backend",
+                type: "backend",
+              },
+            ],
+            documents: [
+              {
+                name: "Recipe Generator Documentation",
+                url: "presentations/Vaishnavi_Recipe_Generator.pdf",
+                type: "pdf",
+              },
+            ],
+          },
+          yugentalk: {
+            title: "YugenTalk - Speak Japanese Naturally",
+            description:
+              "A real-time Japanese language learning application that helps users practice speaking and understanding Japanese through AI-powered conversations.",
+            features: [
+              "Real-time Japanese conversation practice",
+              "AI-driven translation and pronunciation corrections",
+              "WebSocket implementation for live communication",
+              "MongoDB user data management",
+            ],
+            technologies: [
+              "Spring Boot",
+              "Java",
+              "WebSocket",
+              "Gemini AI",
+              "MongoDB",
+              "Node.js",
+              "Gemni APIs",
+            ],
+            challenges:
+              "Implementing real-time chat and accurate Japanese language translation with natural conversation flow.",
+            outcome:
+              "Created an effective language learning platform that provides natural Japanese conversation practice with AI assistance.",
+            documents: [
+              {
+                name: "YugenTalk Project Documentation",
+                url: "presentations/Vaishnavi_YugenTalk.pdf",
+                type: "pdf",
+              },
+            ],
+          },
+          lostfound: {
+            title: "Lost & Found Campus - UI/UX Design",
+            description:
+              "A comprehensive UI/UX design for a campus-wide lost and found system that helps students and staff find, report, and claim lost items with intuitive navigation and efficient management features.",
+            features: [
+              "Admin dashboard for managing lost and found items",
+              "Real-time notifications for new items and matches",
+              "In-app chat system for communication between users",
+              "Location tracking and mapping for where items were found",
+              "Advanced search and filtering for lost items",
+              "Image upload and verification system",
+              "User profiles and claim history tracking",
+              "Category-based item organization",
+              "Report generation and analytics",
+            ],
+            technologies: [
+              "Figma",
+              "UI/UX Design",
+              "Prototyping",
+              "User Research",
+              "Wireframing",
+              "Design Systems",
+              "Adobe XD",
+            ],
+            challenges:
+              "Creating an intuitive user experience that balances security with accessibility, ensuring easy item reporting while preventing false claims and maintaining user privacy.",
+            outcome:
+              "Designed a comprehensive and user-friendly interface that streamlines the lost and found process for campus communities, with clear navigation flows and efficient item management systems.",
+            documents: [
+              {
+                name: "Lost & Found Design Document",
+                url: "presentations/Lost and Found.pdf",
+                type: "pdf",
+              },
+            ],
+          },
         };
 
-        // Start animation when element is visible
-        const counterObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              updateCounter();
-              counterObserver.unobserve(entry.target);
+        const project = projectData[projectId];
+        if (!project) return;
+
+        let documentsSection = "";
+        if (project.documents && project.documents.length > 0) {
+          documentsSection = `
+            <div class="project-documents">
+              <h3>📄 Project Documents</h3>
+              <div class="documents-list">
+                ${project.documents
+                  .map(
+                    (doc) => `
+                  <a href="${doc.url}" target="_blank" class="document-link">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>${doc.name}</span>
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                `
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `;
+        }
+
+        let githubLinksSection = "";
+        if (project.githubLinks && project.githubLinks.length > 0) {
+          githubLinksSection = `
+            <div class="project-github-links">
+              <h3>🔗 Repository Links</h3>
+              <div class="github-links-list">
+                ${project.githubLinks
+                  .map(
+                    (link) => `
+                  <a href="${link.url}" target="_blank" class="github-link">
+                    <i class="fab fa-github"></i>
+                    <span>${link.name}</span>
+                    <i class="fas fa-external-link-alt"></i>
+                  </a>
+                `
+                  )
+                  .join("")}
+              </div>
+            </div>
+          `;
+        }
+
+        let designLinksSection = "";
+        if (projectId === "lostfound") {
+          designLinksSection = `
+            <div class="project-design-links">
+              <h3>🎨 Design Links</h3>
+              <div class="design-links-list">
+                <a href="https://www.figma.com/design/MBOSQATfLyyqktXIoALwnb/Lost-and-Found?node-id=0-1&t=2gIx1dvrkkGPCcPY-1" target="_blank" class="design-link">
+                  <i class="fab fa-figma"></i>
+                  <span>View Figma Design</span>
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              </div>
+            </div>
+          `;
+        }
+
+        modalBody.innerHTML = `
+          <h2>${project.title}</h2>
+          <div class="modal-project-content">
+            <div class="project-description">
+              <h3>📋 Project Overview</h3>
+              <p>${project.description}</p>
+            </div>
+
+            <div class="project-features">
+              <h3>✨ Key Features</h3>
+              <ul>
+                ${project.features
+                  .map((feature) => `<li>${feature}</li>`)
+                  .join("")}
+              </ul>
+            </div>
+
+            <div class="project-technologies">
+              <h3>🛠️ Technologies Used</h3>
+              <div class="tech-tags-modal">
+                ${project.technologies
+                  .map((tech) => `<span class="tech-tag-modal">${tech}</span>`)
+                  .join("")}
+              </div>
+            </div>
+
+            <div class="project-challenges">
+              <h3>🎯 Challenges & Solutions</h3>
+              <p>${project.challenges}</p>
+            </div>
+
+            <div class="project-outcome">
+              <h3>🏆 Outcome & Impact</h3>
+              <p>${project.outcome}</p>
+            </div>
+
+            ${githubLinksSection}
+
+            ${documentsSection}
+
+            ${designLinksSection}
+          </div>
+
+          <style>
+            .modal-project-content {
+              margin-top: 2rem;
+            }
+
+            .modal-project-content h3 {
+              color: #00ffff;
+              margin: 2rem 0 1rem 0;
+              font-size: 1.2rem;
+              border-bottom: 2px solid rgba(0, 255, 255, 0.2);
+              padding-bottom: 0.5rem;
+            }
+
+            .modal-project-content p {
+              line-height: 1.6;
+              color: #d0d0d0;
+              margin-bottom: 1rem;
+            }
+
+            .project-features ul {
+              list-style: none;
+              padding: 0;
+            }
+
+            .project-features li {
+              padding: 0.5rem 0;
+              border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+              position: relative;
+              padding-left: 1.5rem;
+              color: #d0d0d0;
+            }
+
+            .project-features li::before {
+              content: '✓';
+              position: absolute;
+              left: 0;
+              color: #00ffff;
+              font-weight: bold;
+            }
+
+            .tech-tags-modal {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.5rem;
+              margin-top: 1rem;
+            }
+
+            .tech-tag-modal {
+              background: linear-gradient(135deg, #00ffff, #ff6b35);
+              color: #000;
+              padding: 0.3rem 0.8rem;
+              border-radius: 15px;
+              font-size: 0.9rem;
+              font-weight: 500;
+            }
+
+            .documents-list, .github-links-list, .design-links-list {
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+              margin-top: 1rem;
+            }
+
+            .document-link, .design-link, .github-link {
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              padding: 1rem;
+              background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 107, 53, 0.1));
+              backdrop-filter: blur(10px);
+              border-radius: 15px;
+              border: 1px solid rgba(0, 255, 255, 0.2);
+              text-decoration: none;
+              color: #ffffff;
+              transition: all 0.3s ease;
+            }
+
+            .document-link:hover, .design-link:hover, .github-link:hover {
+              border-color: rgba(0, 255, 255, 0.5);
+              transform: translateY(-2px);
+              box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+            }
+
+            .document-link i:first-child {
+              color: #ff6b35;
+              font-size: 1.5rem;
+            }
+
+            .design-link i:first-child {
+              color: #a855f7;
+              font-size: 1.5rem;
+            }
+
+            .github-link i:first-child {
+              color: #00ffff;
+              font-size: 1.5rem;
+            }
+
+            .document-link i:last-child, .design-link i:last-child, .github-link i:last-child {
+              color: #00ffff;
+              margin-left: auto;
+            }
+
+            .document-link span, .design-link span, .github-link span {
+              font-weight: 500;
+            }
+          </style>
+        `;
+
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+      }
+
+      // Close modal functionality
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
+        }
+      });
+
+      // EmailJS initialization (replace with your actual EmailJS user ID)
+      (function () {
+        emailjs.init("KPHn_NDIpnQvSVl18"); // Replace with your actual User ID
+      })();
+
+      // Contact form handling with EmailJS
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const formData = new FormData(this);
+          const formObject = {};
+          formData.forEach((value, key) => {
+            formObject[key] = value;
+          });
+
+          // Get submit button and show loading state
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Sending...';
+          submitBtn.disabled = true;
+
+          // EmailJS send email
+          emailjs
+            .send(
+              "service_5fpgvwu", // Replace with your Service ID
+              "template_rq01twm", // Replace with your Template ID
+              {
+                from_name: formObject.name,
+                from_email: formObject.email,
+                subject: formObject.subject,
+                message: formObject.message,
+                to_email: "jsaivaishnavi15@gmail.com", // Your email
+              }
+            )
+            .then(
+              function (response) {
+                console.log("SUCCESS!", response.status, response.text);
+
+                // Success notification
+                showNotification(
+                  "success",
+                  `Thank you, ${formObject.name}!`,
+                  "Your message has been sent successfully. I'll get back to you soon!"
+                );
+
+                // Reset form
+                document.getElementById("contactForm").reset();
+              },
+              function (error) {
+                console.log("FAILED...", error);
+
+                // Error notification
+                showNotification(
+                  "error",
+                  "Oops! Something went wrong.",
+                  "Failed to send message. Please try again or contact me directly at jsaivaishnavi15@gmail.com"
+                );
+              }
+            )
+            .finally(function () {
+              // Reset button state
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+            });
+        });
+
+      // Custom notification function
+      function showNotification(type, title, message) {
+        // Create notification element
+        const notification = document.createElement("div");
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+          <div class="notification-content">
+            <div class="notification-icon">
+              <i class="fas ${
+                type === "success"
+                  ? "fa-check-circle"
+                  : "fa-exclamation-triangle"
+              }"></i>
+            </div>
+            <div class="notification-text">
+              <h4>${title}</h4>
+              <p>${message}</p>
+            </div>
+            <button class="notification-close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
+
+        // Add notification styles
+        const style = document.createElement("style");
+        style.textContent = `
+          .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 400px;
+            padding: 1rem;
+            border-radius: 15px;
+            backdrop-filter: blur(20px);
+            border: 1px solid;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+            color: white;
+          }
+
+          .notification-success {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 255, 0.1));
+            border-color: rgba(0, 255, 0, 0.3);
+          }
+
+          .notification-error {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 107, 53, 0.1));
+            border-color: rgba(255, 0, 0, 0.3);
+          }
+
+          .notification-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+
+          .notification-icon {
+            font-size: 1.5rem;
+            margin-top: 0.2rem;
+          }
+
+          .notification-success .notification-icon {
+            color: #00ff00;
+          }
+
+          .notification-error .notification-icon {
+            color: #ff4444;
+          }
+
+          .notification-text h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+          }
+
+          .notification-text p {
+            margin: 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.4;
+          }
+
+          .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 0.2rem;
+            margin-left: auto;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+          }
+
+          .notification-close:hover {
+            opacity: 1;
+          }
+
+          @keyframes slideInRight {
+            from {
+              transform: translateX(100%);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+
+          @keyframes slideOutRight {
+            from {
+              transform: translateX(0);
+              opacity: 1;
+            }
+            to {
+              transform: translateX(100%);
+              opacity: 0;
+            }
+          }
+
+          .notification.slide-out {
+            animation: slideOutRight 0.3s ease forwards;
+          }
+
+          @media (max-width: 768px) {
+            .notification {
+              top: 10px;
+              right: 10px;
+              left: 10px;
+              max-width: none;
+            }
+          }
+        `;
+
+        document.head.appendChild(style);
+        document.body.appendChild(notification);
+
+        // Close button functionality
+        const closeBtn = notification.querySelector(".notification-close");
+        closeBtn.addEventListener("click", () => {
+          closeNotification(notification);
+        });
+
+        // Auto close after 7 seconds
+        setTimeout(() => {
+          if (notification.parentNode) {
+            closeNotification(notification);
+          }
+        }, 7000);
+
+        function closeNotification(notificationElement) {
+          notificationElement.classList.add("slide-out");
+          setTimeout(() => {
+            if (notificationElement.parentNode) {
+              notificationElement.remove();
+            }
+          }, 300);
+        }
+      }
+
+      // Skill bars animation
+      function animateSkillBars() {
+        const skillItems = document.querySelectorAll(".skill-item");
+
+        skillItems.forEach((item, index) => {
+          setTimeout(() => {
+            item.style.opacity = "0";
+            item.style.transform = "translateX(-20px)";
+
+            setTimeout(() => {
+              item.style.transition = "all 0.5s ease";
+              item.style.opacity = "1";
+              item.style.transform = "translateX(0)";
+            }, 100);
+          }, index * 100);
+        });
+      }
+
+      // Parallax effect for hero section
+      function parallaxEffect() {
+        window.addEventListener("scroll", () => {
+          const scrolled = window.pageYOffset;
+          const hero = document.querySelector(".hero");
+          const rate = scrolled * -0.5;
+
+          if (hero) {
+            hero.style.transform = `translateY(${rate}px)`;
+          }
+        });
+      }
+
+      // Smooth reveal animations
+      function revealOnScroll() {
+        const reveals = document.querySelectorAll(
+          ".section-title, .section-subtitle"
+        );
+
+        reveals.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add("reveal");
+          }
+        });
+      }
+
+      // Add reveal animation styles
+      function addRevealStyles() {
+        const style = document.createElement("style");
+        style.textContent = `
+          .section-title, .section-subtitle {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+          }
+
+          .section-title.reveal, .section-subtitle.reveal {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          .floating-icons .icon-float:hover {
+            transform: scale(1.2) translateY(-20px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+          }
+
+          .profile-card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+          }
+
+          .nav-link.active {
+            color: #00ffff;
+          }
+
+          .nav-link.active::after {
+            width: 100%;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      // Active navigation link highlighting
+      function highlightActiveSection() {
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        window.addEventListener("scroll", () => {
+          let current = "";
+
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.pageYOffset >= sectionTop - 200) {
+              current = section.getAttribute("id");
+            }
+          });
+
+          navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${current}`) {
+              link.classList.add("active");
             }
           });
         });
-
-        counterObserver.observe(counter.parentElement);
       }
-    });
-  }
 
-  // Project modal functionality
-  const modal = document.getElementById("projectModal");
-  const modalBody = document.getElementById("modalBody");
-  const closeBtn = document.querySelector(".close");
-
-  function openProjectModal(projectId) {
-    const projectData = {
-      healthpredict: {
-        title: "HealthPredict - Disease Prediction Web App",
-        description:
-          "A comprehensive machine learning web application that predicts diseases based on user symptoms using advanced algorithms.",
-        features: [
-          "Disease prediction using Naive Bayes & Random Forest algorithms",
-          "Responsive frontend with side-by-side prediction comparisons",
-          "Data preprocessing and feature engineering for improved accuracy",
-          "User-friendly interface with symptom input forms",
-          "Real-time prediction results with confidence scores",
-        ],
-        technologies: [
-          "Python",
-          "Scikit-Learn",
-          "HTML5",
-          "CSS3",
-          "JavaScript",
-          "Flask",
-          "Pandas",
-          "NumPy",
-        ],
-        challenges:
-          "Implementing accurate disease prediction while handling diverse symptom combinations and ensuring model reliability.",
-        outcome:
-          "Successfully created a working disease prediction system with high accuracy rates and intuitive user experience.",
-        mediaPlaceholder:
-          "Upload screenshots, demo videos, or presentation slides here",
-      },
-      codeplus: {
-        title: "CodePlus - Student Coding Assistant App",
-        description:
-          "An intelligent mobile application designed to help students learn programming through interactive debugging, quizzes, and AI-powered explanations.",
-        features: [
-          "Real-time code debugging with AI assistance",
-          "Interactive programming quizzes and challenges",
-          "Code explanation and learning modules",
-          "Firebase authentication and user progress tracking",
-          "API integrations for enhanced functionality",
-          "Real-time error analysis with suggested fixes",
-        ],
-        technologies: [
-          "Flutter",
-          "Dart",
-          "Firebase",
-          "REST APIs",
-          "Node.js",
-          "AI/ML APIs",
-        ],
-        challenges:
-          "Integrating multiple APIs while maintaining app performance and creating an intuitive learning experience for students.",
-        outcome:
-          "Developed a comprehensive coding assistant that helps students learn programming more effectively with personalized feedback.",
-        mediaPlaceholder:
-          "Upload app screenshots, user flow videos, or feature demonstrations here",
-      },
-      recipe: {
-        title: "Recipe Generator - AI Web App",
-        description:
-          "An AI-powered recipe recommendation system that generates personalized cooking suggestions based on available ingredients and dietary preferences.",
-        features: [
-          "AI-powered recipe generation using Gemini API",
-          "Ingredient-based recipe suggestions",
-          "Dietary preference filtering (vegetarian, vegan, gluten-free, etc.)",
-          "Cooking time and difficulty level preferences",
-          "Full-stack implementation with secure backend APIs",
-          "Personalized user experience with saved preferences",
-        ],
-        technologies: [
-          "Next.js",
-          "React",
-          "Gemini API",
-          "SQL",
-          "Node.js",
-          "JavaScript",
-          "CSS3",
-        ],
-        challenges:
-          "Creating accurate recipe recommendations while handling diverse dietary restrictions and ingredient combinations.",
-        outcome:
-          "Built a functional AI recipe generator that provides personalized cooking suggestions with high user satisfaction.",
-        mediaPlaceholder:
-          "Upload UI screenshots, recipe generation demos, or user interaction videos here",
-      },
-      yugentalk: {
-        title: "YugenTalk - Speak Japanese Naturally",
-        description:
-          "A real-time Japanese language learning application that helps users practice speaking and understanding Japanese through AI-powered conversations.",
-        features: [
-          "Real-time Japanese conversation practice",
-          "AI-driven translation and pronunciation corrections",
-          "WebSocket implementation for live communication",
-          "MongoDB user data management",
-          "Progress tracking and learning analytics",
-          "Voice recognition and speech synthesis",
-          "Interactive learning modules and exercises",
-        ],
-        technologies: [
-          "Spring Boot",
-          "Java",
-          "WebSocket",
-          "Gemini AI",
-          "MongoDB",
-          "Node.js",
-          "Gemni APIs",
-        ],
-        challenges:
-          "Implementing real-time voice processing and accurate Japanese language translation with natural conversation flow.",
-        outcome:
-          "Created an effective language learning platform that provides natural Japanese conversation practice with AI assistance.",
-        mediaPlaceholder:
-          "Upload conversation demos, voice interaction videos, or learning progress screenshots here",
-      },
-    };
-
-    const project = projectData[projectId];
-    if (!project) return;
-
-    modalBody.innerHTML = `
-                <h2>${project.title}</h2>
-                <div class="modal-project-content">
-                    <div class="project-description">
-                        <h3>📋 Project Overview</h3>
-                        <p>${project.description}</p>
-                    </div>
-
-                    <div class="project-features">
-                        <h3>✨ Key Features</h3>
-                        <ul>
-                            ${project.features
-                              .map((feature) => `<li>${feature}</li>`)
-                              .join("")}
-                        </ul>
-                    </div>
-
-                    <div class="project-technologies">
-                        <h3>🛠️ Technologies Used</h3>
-                        <div class="tech-tags-modal">
-                            ${project.technologies
-                              .map(
-                                (tech) =>
-                                  `<span class="tech-tag-modal">${tech}</span>`
-                              )
-                              .join("")}
-                        </div>
-                    </div>
-
-                    <div class="project-challenges">
-                        <h3>🎯 Challenges & Solutions</h3>
-                        <p>${project.challenges}</p>
-                    </div>
-
-                    <div class="project-outcome">
-                        <h3>🏆 Outcome & Impact</h3>
-                        <p>${project.outcome}</p>
-                    </div>
-
-                    <div class="project-media">
-                        <h3>📸 Project Media</h3>
-                        <div class="media-upload-area">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>${project.mediaPlaceholder}</p>
-                            <button class="btn btn-primary" onclick="handleMediaUpload('${projectId}')">
-                                <i class="fas fa-plus"></i> Add Media
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <style>
-                    .modal-project-content {
-                        margin-top: 2rem;
-                    }
-
-                    .modal-project-content h3 {
-                        color: #667eea;
-                        margin: 2rem 0 1rem 0;
-                        font-size: 1.2rem;
-                        border-bottom: 2px solid #f0f0f0;
-                        padding-bottom: 0.5rem;
-                    }
-
-                    .modal-project-content p {
-                        line-height: 1.6;
-                        color: #555;
-                        margin-bottom: 1rem;
-                    }
-
-                    .project-features ul {
-                        list-style: none;
-                        padding: 0;
-                    }
-
-                    .project-features li {
-                        padding: 0.5rem 0;
-                        border-bottom: 1px solid #f0f0f0;
-                        position: relative;
-                        padding-left: 1.5rem;
-                    }
-
-                    .project-features li::before {
-                        content: '✓';
-                        position: absolute;
-                        left: 0;
-                        color: #667eea;
-                        font-weight: bold;
-                    }
-
-                    .tech-tags-modal {
-                        display: flex;
-                        flex-wrap: wrap;
-                        gap: 0.5rem;
-                        margin-top: 1rem;
-                    }
-
-                    .tech-tag-modal {
-                        background: linear-gradient(135deg, #667eea, #764ba2);
-                        color: white;
-                        padding: 0.3rem 0.8rem;
-                        border-radius: 15px;
-                        font-size: 0.9rem;
-                        font-weight: 500;
-                    }
-
-                    .media-upload-area {
-                        border: 2px dashed #ddd;
-                        border-radius: 10px;
-                        padding: 2rem;
-                        text-align: center;
-                        background: #f9f9f9;
-                        margin-top: 1rem;
-                        transition: all 0.3s ease;
-                    }
-
-                    .media-upload-area:hover {
-                        border-color: #667eea;
-                        background: #f0f4ff;
-                    }
-
-                    .media-upload-area i {
-                        font-size: 3rem;
-                        color: #667eea;
-                        margin-bottom: 1rem;
-                    }
-
-                    .media-upload-area p {
-                        color: #666;
-                        margin-bottom: 1rem;
-                    }
-                </style>
-            `;
-
-    modal.style.display = "block";
-    document.body.style.overflow = "hidden";
-  }
-
-  function handleMediaUpload(projectId) {
-    const mediaContent = {
-      healthpredict: `
-            <div class="media-gallery">
-
-                <h4>📊 Presentation</h4>
-                <a href="presentations/healthpredict-presentation.pdf" target="_blank" class="btn btn-primary">
-                    <i class="fas fa-file-pdf"></i> View Presentation
-                </a>
+      // Loading animation
+      function showLoadingAnimation() {
+        const loader = document.createElement("div");
+        loader.innerHTML = `
+          <div style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+          " id="pageLoader">
+            <div style="text-align: center; color: white;">
+              <div style="
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(0, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top-color: #00ffff;
+                animation: spin 1s ease-in-out infinite;
+                margin: 0 auto 1rem;
+              "></div>
+              <h2 style="background: linear-gradient(135deg, #00ffff, #ff6b35); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Loading Portfolio...</h2>
+              <p style="color: #b0b0b0;">Preparing an amazing experience for you</p>
             </div>
-        `,
-      codeplus: `
-            <div class="media-gallery">
-                 <h4>📊 Presentation</h4>
-                <a href="presentations/CodePulse_Vaishnavi.pdf" target="_blank" class="btn btn-primary">
-                    <i class="fas fa-file-pdf"></i> View Presentation
-                </a>
-            </div>
-        `,
-      // Add similar content for other projects
-    };
+            <style>
+              @keyframes spin {
+                to { transform: rotate(360deg); }
+              }
+            </style>
+          </div>
+        `;
 
-    const content = mediaContent[projectId] || "No media available yet.";
-
-    // Create a new modal or update existing modal content
-    const existingModal = document.getElementById(`${projectId}-media-modal`);
-    if (existingModal) {
-      existingModal.remove();
-    }
-
-    const mediaModal = document.createElement("div");
-    mediaModal.id = `${projectId}-media-modal`;
-    mediaModal.innerHTML = `
-        <div class="modal" style="display:block;">
-            <div class="modal-content">
-                <span class="close" onclick="this.parentElement.parentElement.remove()">&times;</span>
-                <h2>${projectId.toUpperCase()} - Project Media</h2>
-                ${content}
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(mediaModal);
-  }
-
-  // Close modal functionality
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-    }
-  });
-
-  // Contact form handling
-  document
-    .getElementById("contactForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-      const formObject = {};
-      formData.forEach((value, key) => {
-        formObject[key] = value;
-      });
-
-      // Simulate form submission
-      const submitBtn = this.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-
-      submitBtn.textContent = "Sending...";
-      submitBtn.disabled = true;
-
-      setTimeout(() => {
-        alert(
-          `Thank you for your message, ${formObject.name}!\n\nYour message has been received. I'll get back to you soon!\n\nNote: In a real implementation, this would integrate with email services or backend APIs to actually send the message.`
-        );
-
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        this.reset();
-      }, 2000);
-    });
-
-  // Typing animation for hero section
-  function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.textContent = "";
-
-    function type() {
-      if (i < text.length) {
-        element.textContent += text.charAt(i);
-        i++;
-        setTimeout(type, speed);
-      }
-    }
-
-    type();
-  }
-
-  // Skill bars animation
-  function animateSkillBars() {
-    const skillItems = document.querySelectorAll(".skill-item");
-
-    skillItems.forEach((item, index) => {
-      setTimeout(() => {
-        item.style.opacity = "0";
-        item.style.transform = "translateX(-20px)";
+        document.body.appendChild(loader);
 
         setTimeout(() => {
-          item.style.transition = "all 0.5s ease";
-          item.style.opacity = "1";
-          item.style.transform = "translateX(0)";
-        }, 100);
-      }, index * 100);
-    });
-  }
-
-  // Parallax effect for hero section
-  function parallaxEffect() {
-    window.addEventListener("scroll", () => {
-      const scrolled = window.pageYOffset;
-      const hero = document.querySelector(".hero");
-      const rate = scrolled * -0.5;
-
-      if (hero) {
-        hero.style.transform = `translateY(${rate}px)`;
-      }
-    });
-  }
-
-  // Smooth reveal animations
-  function revealOnScroll() {
-    const reveals = document.querySelectorAll(
-      ".section-title, .section-subtitle"
-    );
-
-    reveals.forEach((element) => {
-      const elementTop = element.getBoundingClientRect().top;
-      const elementVisible = 150;
-
-      if (elementTop < window.innerHeight - elementVisible) {
-        element.classList.add("reveal");
-      }
-    });
-  }
-
-  // Add reveal animation styles
-  function addRevealStyles() {
-    const style = document.createElement("style");
-    style.textContent = `
-                .section-title, .section-subtitle {
-                    opacity: 0;
-                    transform: translateY(30px);
-                    transition: all 0.8s ease;
-                }
-
-                .section-title.reveal, .section-subtitle.reveal {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-
-                .floating-icons .icon-float:hover {
-                    transform: scale(1.2) translateY(-20px);
-                    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
-                }
-
-                .profile-card:hover {
-                    transform: scale(1.05);
-                    transition: transform 0.3s ease;
-                }
-
-                .nav-link.active {
-                    color: #667eea;
-                }
-
-                .nav-link.active::after {
-                    width: 100%;
-                }
-            `;
-    document.head.appendChild(style);
-  }
-
-  // Active navigation link highlighting
-  function highlightActiveSection() {
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    window.addEventListener("scroll", () => {
-      let current = "";
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.pageYOffset >= sectionTop - 200) {
-          current = section.getAttribute("id");
-        }
-      });
-
-      navLinks.forEach((link) => {
-        link.classList.remove("active");
-        if (link.getAttribute("href") === `#${current}`) {
-          link.classList.add("active");
-        }
-      });
-    });
-  }
-
-  // Loading animation
-  function showLoadingAnimation() {
-    const loader = document.createElement("div");
-    loader.innerHTML = `
-                <div style="
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 9999;
-                    transition: opacity 0.5s ease;
-                " id="pageLoader">
-                    <div style="text-align: center; color: white;">
-                        <div style="
-                            width: 50px;
-                            height: 50px;
-                            border: 3px solid rgba(255,255,255,0.3);
-                            border-radius: 50%;
-                            border-top-color: white;
-                            animation: spin 1s ease-in-out infinite;
-                            margin: 0 auto 1rem;
-                        "></div>
-                        <h2>Loading Portfolio...</h2>
-                        <p>Preparing an amazing experience for you</p>
-                    </div>
-                    <style>
-                        @keyframes spin {
-                            to { transform: rotate(360deg); }
-                        }
-                    </style>
-                </div>
-            `;
-
-    document.body.appendChild(loader);
-
-    setTimeout(() => {
-      const pageLoader = document.getElementById("pageLoader");
-      pageLoader.style.opacity = "0";
-      setTimeout(() => {
-        pageLoader.remove();
-      }, 500);
-    }, 1500);
-  }
-
-  // Theme switcher (bonus feature)
-  function createThemeSwitcher() {
-    const themeSwitcher = document.createElement("div");
-    themeSwitcher.innerHTML = `
-                <button id="themeToggle" style="
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 50%;
-                    border: none;
-                    background: linear-gradient(135deg, #667eea, #764ba2);
-                    color: white;
-                    font-size: 1.5rem;
-                    cursor: pointer;
-                    z-index: 1000;
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                    transition: all 0.3s ease;
-                " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    <i class="fas fa-moon"></i>
-                </button>
-            `;
-
-    document.body.appendChild(themeSwitcher);
-    h;
-    document
-      .getElementById("themeToggle")
-      .addEventListener("click", function () {
-        document.body.classList.toggle("dark-theme");
-        const icon = this.querySelector("i");
-        if (document.body.classList.contains("dark-theme")) {
-          icon.className = "fas fa-sun";
-        } else {
-          icon.className = "fas fa-moon";
-        }
-      });
-  }
-
-  // Initialize all functionality when DOM is loaded
-  document.addEventListener("DOMContentLoaded", function () {
-    // Show loading animation
-    showLoadingAnimation();
-
-    // Initialize all features after loading
-    setTimeout(() => {
-      initScrollAnimations();
-      animateCounters();
-      addRevealStyles();
-      highlightActiveSection();
-      parallaxEffect();
-      createThemeSwitcher();
-
-      // Add scroll event for reveal animations
-      window.addEventListener("scroll", revealOnScroll);
-
-      // Trigger initial reveal check
-      revealOnScroll();
-
-      // Add some entrance animations
-      setTimeout(() => {
-        const heroTitle = document.querySelector(".hero-title");
-        const heroSubtitle = document.querySelector(".hero-subtitle");
-
-        if (heroTitle && heroSubtitle) {
-          heroTitle.style.opacity = "0";
-          heroTitle.style.transform = "translateY(30px)";
-          heroSubtitle.style.opacity = "0";
-          heroSubtitle.style.transform = "translateY(30px)";
-
+          const pageLoader = document.getElementById("pageLoader");
+          pageLoader.style.opacity = "0";
           setTimeout(() => {
-            heroTitle.style.transition = "all 1s ease";
-            heroTitle.style.opacity = "1";
-            heroTitle.style.transform = "translateY(0)";
-          }, 300);
+            pageLoader.remove();
+          }, 500);
+        }, 1500);
+      }
 
+      // Initialize all functionality when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Show loading animation
+        showLoadingAnimation();
+
+        // Initialize all features after loading
+        setTimeout(() => {
+          initScrollAnimations();
+          animateCounters();
+          addRevealStyles();
+          highlightActiveSection();
+          parallaxEffect();
+
+          // Add scroll event for reveal animations
+          window.addEventListener("scroll", revealOnScroll);
+
+          // Trigger initial reveal check
+          revealOnScroll();
+
+          // Add some entrance animations
           setTimeout(() => {
-            heroSubtitle.style.transition = "all 1s ease";
-            heroSubtitle.style.opacity = "1";
-            heroSubtitle.style.transform = "translateY(0)";
-          }, 600);
+            const heroTitle = document.querySelector(".hero-title");
+            const heroSubtitle = document.querySelector(".hero-subtitle");
+
+            if (heroTitle && heroSubtitle) {
+              heroTitle.style.opacity = "0";
+              heroTitle.style.transform = "translateY(30px)";
+              heroSubtitle.style.opacity = "0";
+              heroSubtitle.style.transform = "translateY(30px)";
+
+              setTimeout(() => {
+                heroTitle.style.transition = "all 1s ease";
+                heroTitle.style.opacity = "1";
+                heroTitle.style.transform = "translateY(0)";
+              }, 300);
+
+              setTimeout(() => {
+                heroSubtitle.style.transition = "all 1s ease";
+                heroSubtitle.style.opacity = "1";
+                heroSubtitle.style.transform = "translateY(0)";
+              }, 600);
+            }
+          }, 100);
+        }, 1600);
+      });
+
+      // Add keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.style.display === "block") {
+          modal.style.display = "none";
+          document.body.style.overflow = "auto";
         }
-      }, 100);
-    }, 1600);
-  });
-
-  // Add keyboard navigation
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && modal.style.display === "block") {
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
-    }
-  });
-
-  // Add smooth hover effects for buttons
-  document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".btn, .btn-icon, .social-link");
-
-    buttons.forEach((button) => {
-      button.addEventListener("mouseenter", function () {
-        this.style.transform = "translateY(-2px)";
       });
 
-      button.addEventListener("mouseleave", function () {
-        this.style.transform = "translateY(0)";
+      // Add smooth hover effects for buttons
+      document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll(
+          ".btn, .btn-icon, .social-link"
+        );
+
+        buttons.forEach((button) => {
+          button.addEventListener("mouseenter", function () {
+            this.style.transform = "translateY(-2px)";
+          });
+
+          button.addEventListener("mouseleave", function () {
+            this.style.transform = "translateY(0)";
+          });
+        });
       });
-    });
-  });
 
-  // Performance optimization: Debounce scroll events
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
+      // Performance optimization: Debounce scroll events
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
 
-  // Apply debouncing to scroll events
-  const debouncedReveal = debounce(revealOnScroll, 10);
-  window.addEventListener("scroll", debouncedReveal);
-
-
-</script>
+      // Apply debouncing to scroll events
+      const debouncedReveal = debounce(revealOnScroll, 10);
+      window.addEventListener("scroll", debouncedReveal);
+    </script>
+  </body>
+</html>
